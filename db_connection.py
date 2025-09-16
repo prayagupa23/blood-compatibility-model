@@ -21,14 +21,21 @@ def append_to_csv(docs, filename = csv_file):
     except FileNotFoundError:
         dataFrame.to_csv(csv_file, mode='w', header=True, index=False) # ye file not found exception hua toh means file doesn't exist, so wo write karega ek new file me with header
 
-pipeline = [
-    {"$match" : {"operationType" : "insert" , "fullDocument.userType" : "donor" }}
-]
+def start_mongo_listener():
+    pipeline = [{"$match": {"operationType": "insert", "fullDocument.userType": "donor"}}]
+    with collection.watch(pipeline) as streams:
+        for change in streams:
+            doc = change["fullDocument"]
+            append_to_csv(doc)
 
-with collection.watch(pipeline) as streams:
-    for change in streams:
-        doc = change["fullDocument"]
-        append_to_csv(doc)
+# pipeline = [
+#     {"$match" : {"operationType" : "insert" , "fullDocument.userType" : "donor" }}
+# ]
+
+# with collection.watch(pipeline) as streams:
+#     for change in streams:
+#         doc = change["fullDocument"]
+#         append_to_csv(doc)
 
 # query = {"userType" : "donor"}
 # results = collection.find(query)

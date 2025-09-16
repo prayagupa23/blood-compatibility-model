@@ -36,6 +36,20 @@ def get_donors_api():
     best_donors = find_best_donors(request_data, donors_df)
     return jsonify(best_donors)
 
+
+from threading import Thread
+from db_connection import start_mongo_listener
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Use Railway provided port
-    app.run(host="0.0.0.0", port=port, debug=True)        # Bind to all interfaces
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Start MongoDB listener in background
+    t = Thread(target=start_mongo_listener)
+    t.daemon = True
+    t.start()
+    
+    app.run(host="0.0.0.0", port=port)
+
+# if __name__ == '__main__':
+#     port = int(os.environ.get("PORT", 5000))  # Use Railway provided port
+#     app.run(host="0.0.0.0", port=port, debug=True)        # Bind to all interfaces
