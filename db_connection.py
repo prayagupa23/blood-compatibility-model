@@ -1,7 +1,12 @@
 import pandas as pd
+import certifi as cf
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://igniteIt:l6KeRHXcfFvXhiEy@blood-donation-cluster.ysphuoa.mongodb.net/?retryWrites=true&w=majority&appName=blood-donation-cluster")
+client = MongoClient(
+    "mongodb+srv://igniteIt:l6KeRHXcfFvXhiEy@blood-donation-cluster.ysphuoa.mongodb.net/?retryWrites=true&w=majority&appName=blood-donation-cluster",
+    tls = True,
+    tlsCAFile = cf.where()
+)
 db = client["test"]
 collection = db["users"]
 

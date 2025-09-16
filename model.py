@@ -13,6 +13,18 @@ BLOOD_COMPATIBILITY = {
     'O+' : ['O-','O+'],
     'O-' : ['O-']
 }
+
+
+def safe_parse_date(date_value):
+    if not date_value or str(date_value).lower() == "nan":
+        # If no date → assume donor donated very long ago
+        return datetime(2000, 1, 1)  
+    try:
+        return datetime.strptime(str(date_value), "%B %d %Y")  # expected format
+    except ValueError:
+        # If it’s in the wrong format, just return a very old date
+        return datetime(2000, 1, 1)
+
 def calculate_blood_score(patient_blood_group, donor_blood_group):
     if donor_blood_group in BLOOD_COMPATIBILITY.get(patient_blood_group,[]):
         return 1.0
@@ -26,6 +38,7 @@ def calculate_distance_score(hospital_coords, donor_coords, max_radius_km = 10):
 
 
 MIN_DAYS_BETWEEN_DONATIONS = 90
+#last_donation_date = datetime.strptime(donor['lastDonationDate'], "%B %d %Y")
 
 def calculate_recency_score(last_donation_date):
     time_since_donation = datetime.now() - last_donation_date
@@ -57,8 +70,8 @@ def find_best_donors(patient_request, donors_df):
         if distance_score == 0:
             continue
         
-        # 3. Recency Score
-        recency_score = calculate_recency_score(donor['last_donation_date'])
+        last_donation_date = safe_parse_date(donor['lastDonationDate'])
+        recency_score = calculate_recency_score(last_donation_date)
         
         # If ineligible, skip
         if recency_score == 0:
@@ -68,7 +81,7 @@ def find_best_donors(patient_request, donors_df):
         final_score = (distance_score * WEIGHTS['distance']) + (recency_score * WEIGHTS['recency'])
         
         scores.append({
-            'donor_id': donor['donor_id'],
+            'donor_id': donor.name,
             'name': donor['name'],
             'blood_group': donor['blood_group'],
             'compatibility_score': round(final_score * 100, 2), # Present as a percentage

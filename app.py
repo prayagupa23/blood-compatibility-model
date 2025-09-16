@@ -5,10 +5,15 @@ from model import find_best_donors
 
 app = Flask(__name__)
 try:
-    donors_df = pd.read_excel('DONOR_DATA.xlsx')
+    donors_df = pd.read_csv('DONOR_DATA1.csv')
+    donors_df.rename(columns={
+        "bloodGroup": "blood_group",
+        "location.lat": "latitude",
+        "location.lng": "longitude"
+    }, inplace=True)
     print("Donor data loaded successfully.")
 except FileNotFoundError:
-    print("Error: DONOR_DATA.xlsx not found! Make sure it's in the same folder.")
+    print("Error: DONOR_DATA1.csv not found! Make sure it's in the same folder.")
     donors_df = pd.DataFrame()
 
 @app.route('/get_donors', methods=['POST'])
