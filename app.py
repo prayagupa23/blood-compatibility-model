@@ -37,5 +37,5 @@ def get_donors_api():
     return jsonify(best_donors)
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5001))  # Use Railway provided port
-    app.run(host="0.0.0.0", port=port)        # Bind to all interfaces
+    port = int(os.environ.get("PORT", 5000))  # Use Railway provided port
+    app.run(host="0.0.0.0", port=port, debug=True)        # Bind to all interfaces
