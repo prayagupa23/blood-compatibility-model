@@ -1,0 +1,5 @@
+name,email,password,phone,userType,bloodGroup,hospitalName,licenseNumber,isVerified,createdAt,__v,location.lat,location.lng,location.updatedAt
+Aayush Sadaye,parth.salunke@somaiya.edu,$2a$10$aoncmBy3j9WDBlO4Xun4w./oVCj0PiuqiMoNbL5Tr9rEptDoU.AvK,1234456789,donor,A-,,,False,2025-09-16 12:55:46.748,0,19.1004672,72.8399872,2025-09-16 14:25:11.598
+Prayag Upadhyaya,prayag.u@somaiya.edu,$2a$10$/HuiBQm.2Su.vJxgEc/egeo4nm/7Zpy60V6LztrpmB.lbx2evSPy2,9321486739,donor,A+,,,False,2025-09-16 13:15:55.481,0,19.1004672,72.8399872,2025-09-16 13:16:37.731
+Win Rar Salunke,winrariors1@gmail.com,$2a$10$R6yXcRqRNMi.2./b4VZsdenccCuWUC8cJgkHGvuyPXhPhwnEqYO4.,9833987513,donor,AB+,,,False,2025-09-16 16:06:03.491,0,21.9974,79.0011,2025-09-16 16:06:09.712
+Jagruti,borhadejagruti137@gmail.com,$2a$10$Yn2vSkHy7vnVrb4UU9Gd/e8JctTxumZcn5FrzMDEccXB60LgDaTjK,123457890,donor,A+,,,False,2025-09-16 16:19:40.368,0
